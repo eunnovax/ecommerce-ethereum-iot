@@ -84,9 +84,6 @@ contract Logistics {
 
     /// cancel order ends 
     
-    /// carriers
-
-    /// carriers end 
     /// iot container report
     function containerReport(address _uniqueId, string memory _transitStatus) public returns (string memory) {
         require(packages[_uniqueId].isuidgenerated);
