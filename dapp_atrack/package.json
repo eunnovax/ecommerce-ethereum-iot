@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "lite-server": "^2.4.0",
-    "solc": "^0.5.7"
+    "solc": "^0.5.7",
+    "truffle-hdwallet-provider": "^1.0.10"
   },
   "devDependencies": {},
   "scripts": {
