@@ -63,7 +63,7 @@ class ProductProvider extends Component {
           this.logisticsInstance = instance;
           this.setState({ account: accounts[0] });
           // Get the value from the contract to prove it worked.
-          return this.logisticsInstance.setSign.call(accounts[0]);
+          return this.logisticsInstance.contractCheck.call(accounts[0]);
         })
         .then(result => {
           console.log("contract response", result);

@@ -50,9 +50,11 @@ contract Logistics {
     
     ///MODIFIER END
     
-    /// manage carriers
-    
-    /// manage carriers end
+    // contract check method after instantiation
+    function contractCheck() pure public returns (string memory) {
+        string memory response = "contract works";
+        return response;
+    }
     
     function manageContainers(address _containerAddress) onlyOwner public returns (bool) {
         if(!containers[_containerAddress]) {
