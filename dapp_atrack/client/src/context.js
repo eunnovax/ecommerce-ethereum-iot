@@ -1,24 +1,78 @@
 import React, { Component } from "react";
 import { storeProducts, detailProduct } from "./data";
+import Logistics from "../build/contracts/Logistics.json";
+import getWeb3 from "./utils/getWeb3";
 
 const ProductContext = React.createContext();
 //Provider
 //Consumer
 
 class ProductProvider extends Component {
-  state = {
-    products: [],
-    detailProduct: detailProduct,
-    cart: [],
-    modalOpen: false,
-    modalProduct: detailProduct,
-    cartSubTotal: 0,
-    cartTax: 0,
-    cartTotal: 0
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      products: [],
+      detailProduct: detailProduct,
+      cart: [],
+      modalOpen: false,
+      modalProduct: detailProduct,
+      cartSubTotal: 0,
+      cartTax: 0,
+      cartTotal: 0,
+      web3: null,
+      account: null
+    };
+  }
+
   componentDidMount() {
     this.setProducts();
+    // instantiate web3 connection
+    getWeb3
+      .then(results => {
+        this.setState({
+          web3: results.web3
+        });
+        // Instantiate contract once web3 provided.
+        this.instantiateContract();
+      })
+      .catch(() => {
+        console.log("Error finding web3.");
+      });
   }
+
+  // Instantiate smart contract
+  instantiateContract() {
+    /*
+     * SMART CONTRACT EXAMPLE
+     *
+     * Normally these functions would be called in the context of a
+     * state management library, but for convenience I've placed them here.
+     */
+    //this.state.web3 = this.state.web3.bind(this);
+
+    const contract = require("truffle-contract");
+    var logistics = contract(Logistics);
+    logistics.setProvider(this.state.web3.currentProvider);
+
+    // Get accounts.
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      logistics
+        .deployed()
+        .then(instance => {
+          this.logisticsInstance = instance;
+          this.setState({ account: accounts[0] });
+          // Get the value from the contract to prove it worked.
+          return this.logisticsInstance.setSign.call(accounts[0]);
+        })
+        .then(result => {
+          console.log("contract response", result);
+          // Update state with the result.
+          return result;
+        });
+    });
+  }
+
   // sets the product array to the initial state
   setProducts = () => {
     let tempProducts = [];
