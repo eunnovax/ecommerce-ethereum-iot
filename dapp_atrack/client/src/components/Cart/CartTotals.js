@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ProductConsumer } from "../../context";
 
 export default function CartTotals({ value }) {
-  const { cartSubTotal, cartTax, cartTotal, clearCart } = value;
+  const { cartSubTotal, cartTax, cartTotal, clearCart, cart } = value;
+  const id = cart[0].id;
+  const title = cart[0].title;
   return (
     <React.Fragment>
       <div className="container">
@@ -20,6 +23,16 @@ export default function CartTotals({ value }) {
                 clear cart
               </button>
             </Link>
+            <Link to="/">
+              <button
+                className="cart-btn"
+                type="button"
+                onClick={() => value.handleOrder(id, title)}
+              >
+                order
+              </button>
+            </Link>
+            ;
             <h5>
               <span className="text-title">subtotal :</span>
               <strong>$ {cartSubTotal}</strong>

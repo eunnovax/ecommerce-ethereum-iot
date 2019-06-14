@@ -21,8 +21,11 @@ class ProductProvider extends Component {
       cartTax: 0,
       cartTotal: 0,
       web3: null,
-      account: null
+      account: null,
+      orderID: null
     };
+
+    this.handleOrder = this.handleOrder.bind(this);
   }
 
   componentDidMount() {
@@ -100,9 +103,10 @@ class ProductProvider extends Component {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
+    product.switchOff = true;
     product.inCart = true;
     product.count = 1;
-    const price = product.price;
+    const price = product.price * product.count;
     product.total = price;
     this.setState(
       () => {
@@ -213,6 +217,23 @@ class ProductProvider extends Component {
       };
     });
   };
+  handleOrder = (id, title) => {
+    this.logisticsInstance
+      .orderItem(id, title, { from: this.state.account })
+      .then(result => {
+        console.log("order ID", result);
+        this.setState(() => {
+          return {
+            orderID: result
+          };
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        window.alert("There was an error recovering order ID");
+      });
+  };
+
   render() {
     return (
       <ProductContext.Provider
@@ -225,7 +246,8 @@ class ProductProvider extends Component {
           increment: this.increment,
           decrement: this.decrement,
           removeItem: this.removeItem,
-          clearCart: this.clearCart
+          clearCart: this.clearCart,
+          handleOrder: this.handleOrder
         }}
       >
         {this.props.children}

@@ -14,7 +14,8 @@ export const storeProducts = [
       "Long Range All-Wheel Drive Midnight Silver Metallic Paint 18’’ Aero Wheels Black and White Premium Interior Autopilot",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 2,
@@ -26,7 +27,8 @@ export const storeProducts = [
       "Long Range All-Wheel Drive Midnight Silver Metallic Paint 18’’ Aero Wheels Black and White Premium Interior Autopilot",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 3,
@@ -38,7 +40,8 @@ export const storeProducts = [
       "Long Range All-Wheel Drive Midnight Silver Metallic Paint 18’’ Aero Wheels Black and White Premium Interior Autopilot",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 4,
@@ -50,7 +53,8 @@ export const storeProducts = [
       "Free Supercharging Ultra High Fidelity Sound Subzero Weather Package Keyless Entry Power Liftgate GPS Enabled Homelink",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 5,
@@ -62,7 +66,8 @@ export const storeProducts = [
       "Free Supercharging Ultra High Fidelity Sound Subzero Weather Package Keyless Entry Power Liftgate GPS Enabled Homelink",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 6,
@@ -74,7 +79,8 @@ export const storeProducts = [
       "Free Supercharging Ultra High Fidelity Sound Subzero Weather Package Keyless Entry Power Liftgate GPS Enabled Homelink",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 7,
@@ -86,7 +92,8 @@ export const storeProducts = [
       "Autopilot with convenience features Free Supercharging HEPA Air Filtration System Smart Air Suspension Subzero Weather Package Keyless Entry Power Liftgate",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   },
   {
     id: 8,
@@ -98,7 +105,8 @@ export const storeProducts = [
       "Autopilot with convenience features Free Supercharging HEPA Air Filtration System Smart Air Suspension Subzero Weather Package Keyless Entry Power Liftgate",
     inCart: false,
     count: 0,
-    total: 0
+    total: 0,
+    switchOff = false
   }
 ];
 
@@ -112,5 +120,6 @@ export const detailProduct = {
     "Long Range All-Wheel Drive Midnight Silver Metallic Paint 18’’ Aero Wheels Black and White Premium Interior Autopilot",
   inCart: false,
   count: 0,
-  total: 0
+  total: 0,
+  switchOff = false
 };
