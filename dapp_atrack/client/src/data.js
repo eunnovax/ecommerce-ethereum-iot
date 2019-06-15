@@ -15,7 +15,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 6,
@@ -80,7 +80,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 7,
@@ -93,7 +93,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   },
   {
     id: 8,
@@ -106,7 +106,7 @@ export const storeProducts = [
     inCart: false,
     count: 0,
     total: 0,
-    switchOff = false
+    switchOff: false
   }
 ];
 
@@ -121,5 +121,5 @@ export const detailProduct = {
   inCart: false,
   count: 0,
   total: 0,
-  switchOff = false
+  switchOff: false
 };
