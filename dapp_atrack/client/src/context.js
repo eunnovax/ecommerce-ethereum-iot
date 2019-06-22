@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { storeProducts, detailProduct } from "./data";
-import Logistics from "../build/contracts/Logistics.json";
+import Logistics from "./contracts/Logistics.json";
 import getWeb3 from "./utils/getWeb3";
 
 const ProductContext = React.createContext();
@@ -31,7 +31,7 @@ class ProductProvider extends Component {
   componentDidMount() {
     this.setProducts();
     // instantiate web3 connection
-    getWeb3
+    getWeb3()
       .then(results => {
         this.setState({
           web3: results.web3
