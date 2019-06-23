@@ -11,7 +11,8 @@
     "dotenv": "^8.0.0",
     "lite-server": "^2.4.0",
     "solc": "^0.5.7",
-    "truffle-hdwallet-provider": "^1.0.10"
+    "truffle-hdwallet-provider": "^1.0.10",
+    "web3": "^1.0.0-beta.55"
   },
   "devDependencies": {},
   "scripts": {

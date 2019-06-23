@@ -21,61 +21,64 @@ class ProductProvider extends Component {
       cartTax: 0,
       cartTotal: 0,
       web3: null,
-      account: null,
-      orderID: null
+      accounts: null,
+      contract: null,
+      orderID: null,
+      response: ""
     };
 
     this.handleOrder = this.handleOrder.bind(this);
   }
 
-  componentDidMount() {
+  ///////////////////
+
+  componentDidMount = async () => {
     this.setProducts();
-    // instantiate web3 connection
-    getWeb3()
-      .then(results => {
-        this.setState({
-          web3: results.web3
-        });
-        // Instantiate contract once web3 provided.
-        this.instantiateContract();
-      })
-      .catch(() => {
-        console.log("Error finding web3.");
-      });
-  }
 
-  // Instantiate smart contract
-  instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-    //this.state.web3 = this.state.web3.bind(this);
+    try {
+      // Get network provider and web3 instance.
+      const web3 = await getWeb3();
 
-    const contract = require("truffle-contract");
-    var logistics = contract(Logistics);
-    logistics.setProvider(this.state.web3.currentProvider);
+      // Use web3 to get the user's accounts.
+      const accounts = await web3.eth.getAccounts();
 
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      logistics
-        .deployed()
-        .then(instance => {
-          this.logisticsInstance = instance;
-          this.setState({ account: accounts[0] });
-          // Get the value from the contract to prove it worked.
-          return this.logisticsInstance.contractCheck.call(accounts[0]);
-        })
-        .then(result => {
-          console.log("contract response", result);
-          // Update state with the result.
-          return result;
-        });
+      // Get the contract instance.
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = Logistics.networks[networkId];
+      const instance = new web3.eth.Contract(
+        Logistics.abi,
+        deployedNetwork && deployedNetwork.address
+      );
+
+      // Set web3, accounts, and contract to the state, and then proceed with an
+      // example of interacting with the contract's methods.
+      this.setState({ web3, accounts, contract: instance }, this.runExample);
+    } catch (error) {
+      // Catch any errors for any of the above operations.
+      alert(
+        `Failed to load web3, accounts, or contract. Check console for details.`
+      );
+      console.error(error);
+    }
+  };
+
+  runExample = async () => {
+    const { accounts, contract } = this.state;
+
+    // Stores a given value, 5 by default.
+    //await contract.methods.contractCheck().send({ from: accounts[0] });
+
+    // Get the response from the contract to prove it worked.
+    const response = await contract.methods
+      .contractCheck()
+      .call({ from: accounts[0] });
+    // Update state with the result.
+    this.setState({ response: response }, () => {
+      console.log("web3 contract response", this.state.response);
     });
-  }
+  };
 
+  ///////////////////
   // sets the product array to the initial state
   setProducts = () => {
     let tempProducts = [];
@@ -217,21 +220,14 @@ class ProductProvider extends Component {
       };
     });
   };
-  handleOrder = (id, title) => {
-    this.logisticsInstance
-      .orderItem(id, title, { from: this.state.account })
-      .then(result => {
-        console.log("order ID", result);
-        this.setState(() => {
-          return {
-            orderID: result
-          };
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        window.alert("There was an error recovering order ID");
-      });
+  handleOrder = async (id, title) => {
+    const { contract, accounts } = this.state;
+    const result = await contract.methods
+      .orderItem(id, title)
+      .call({ from: accounts[0] });
+    this.setState({ orderID: result }, () => {
+      console.log("orderItem response", this.state.orderID);
+    });
   };
 
   render() {

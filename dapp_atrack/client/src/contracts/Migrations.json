@@ -1371,12 +1371,12 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0x921c117ae1Ba1ff59095dC927ebd5c1Ca9937BA8",
-      "transactionHash": "0x3ba7d9e4c813dd31abe94b20adcdd9e308676cacca5adebb5eaee12fcbcae908"
+      "address": "0xe453ed367ce29597306d9C0Fa501cc18BfC9304B",
+      "transactionHash": "0x4a0df77b27b309f8c56c236e8a48cc0cb98d6b0cbe0a0f887014d8939d43dfb0"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-06-15T17:47:57.595Z",
+  "updatedAt": "2019-06-23T18:58:58.345Z",
   "devdoc": {
     "methods": {}
   },
