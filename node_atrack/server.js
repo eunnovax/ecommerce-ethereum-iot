@@ -16,7 +16,7 @@ const privateKey1 = Buffer.from('039d93d1fdef86309699e31d1c2d9475ad0c2978a15af7d
 //const privateKey1 = Buffer.from(process.env.PRIVATE_KEY_1, 'hex')
 const privateKey2 = Buffer.from('7c1dce5c21b6bf0b590e50bd9b6c08fb1698d13dd9646535b4d2858b390c1a2b', 'hex')
 //console.log('privatekey1', process.env.PRIVATE_KEY_1)
-const contractAddress = '0x0e07eC7F09cC71ad2044A7F5D96f62DF2436b83c'
+const contractAddress = '0xff1488e5bb6393F0542517108a6e3705A1c2F8A9'
 const contractABI = [
     {
         "constant": false,
@@ -113,6 +113,20 @@ const contractABI = [
         ],
         "payable": false,
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "contractCheck",
+        "outputs": [
+            {
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "pure",
         "type": "function"
     },
     {

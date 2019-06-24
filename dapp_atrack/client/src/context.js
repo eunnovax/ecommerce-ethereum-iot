@@ -30,8 +30,6 @@ class ProductProvider extends Component {
     this.handleOrder = this.handleOrder.bind(this);
   }
 
-  ///////////////////
-
   componentDidMount = async () => {
     this.setProducts();
 
@@ -78,7 +76,6 @@ class ProductProvider extends Component {
     });
   };
 
-  ///////////////////
   // sets the product array to the initial state
   setProducts = () => {
     let tempProducts = [];
