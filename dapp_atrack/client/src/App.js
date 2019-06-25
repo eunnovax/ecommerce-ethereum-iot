@@ -10,6 +10,7 @@ import Details from "./components/Details";
 import Cart from "./components/Cart/Cart";
 import Default from "./components/Default";
 import Modal from "./components/Modal";
+import Manage from "./components/Manage";
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
@@ -66,6 +67,7 @@ class App extends Component {
           <Route exact path="/" component={ProductList} />
           <Route path="/details" component={Details} />
           <Route path="/cart" component={Cart} />
+          <Route path="/manage" component={Manage} />
           <Route component={Default} />
         </Switch>
         <Modal />

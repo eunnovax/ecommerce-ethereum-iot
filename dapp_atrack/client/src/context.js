@@ -24,7 +24,8 @@ class ProductProvider extends Component {
       accounts: null,
       contract: null,
       orderID: null,
-      response: ""
+      response: "",
+      container: null
     };
 
     this.handleOrder = this.handleOrder.bind(this);
@@ -226,6 +227,20 @@ class ProductProvider extends Component {
       console.log("orderItem response", this.state.orderID);
     });
   };
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+  onSubmit = async e => {
+    e.preventDefault();
+    const { contract, accounts } = this.state;
+    const result = await contract.methods
+      .manageContainers(this.state.container)
+      .call({ from: accounts[0] });
+
+    console.log("manageContainer response", result);
+  };
 
   render() {
     return (
@@ -240,7 +255,9 @@ class ProductProvider extends Component {
           decrement: this.decrement,
           removeItem: this.removeItem,
           clearCart: this.clearCart,
-          handleOrder: this.handleOrder
+          handleOrder: this.handleOrder,
+          change: this.change,
+          onSubmit: this.onSubmit
         }}
       >
         {this.props.children}
