@@ -34,7 +34,7 @@ contract Logistics {
     
     address Owner;
     mapping (address => package) public packages;
-    mapping (address => bool) public carriers;
+    mapping (address => address) public orders;
     mapping (address => bool) public containers;
     ///DECLARATION END
     
@@ -77,6 +77,7 @@ contract Logistics {
         packages[uniqueId].orderStatus = 1;
         packages[uniqueId].customer = msg.sender;
         packages[uniqueId].orderTime = now;
+        orders[msg.sender] = uniqueId;
         emit orderId(uniqueId);    
         return uniqueId;
     }

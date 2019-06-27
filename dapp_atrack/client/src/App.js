@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-//import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import { Route, Switch } from "react-router-dom";
+import Logistics from "./contracts/Logistics.json";
 import getWeb3 from "./utils/getWeb3";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,11 +11,19 @@ import Cart from "./components/Cart/Cart";
 import Default from "./components/Default";
 import Modal from "./components/Modal";
 import Manage from "./components/Manage";
+import Tracking from "./components/Tracking";
+import { ProductProvider } from "./context";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = {
+    web3: null,
+    accounts: null,
+    contract: null,
+    response: ""
+  };
 
   // componentDidMount = async () => {
+
   //   try {
   //     // Get network provider and web3 instance.
   //     const web3 = await getWeb3();
@@ -25,10 +33,10 @@ class App extends Component {
 
   //     // Get the contract instance.
   //     const networkId = await web3.eth.net.getId();
-  //     const deployedNetwork = SimpleStorageContract.networks[networkId];
+  //     const deployedNetwork = Logistics.networks[networkId];
   //     const instance = new web3.eth.Contract(
-  //       SimpleStorageContract.abi,
-  //       deployedNetwork && deployedNetwork.address,
+  //       Logistics.abi,
+  //       deployedNetwork && deployedNetwork.address
   //     );
 
   //     // Set web3, accounts, and contract to the state, and then proceed with an
@@ -37,7 +45,7 @@ class App extends Component {
   //   } catch (error) {
   //     // Catch any errors for any of the above operations.
   //     alert(
-  //       `Failed to load web3, accounts, or contract. Check console for details.`,
+  //       `Failed to load web3, accounts, or contract. Check console for details.`
   //     );
   //     console.error(error);
   //   }
@@ -47,13 +55,16 @@ class App extends Component {
   //   const { accounts, contract } = this.state;
 
   //   // Stores a given value, 5 by default.
-  //   await contract.methods.set(5).send({ from: accounts[0] });
+  //   //await contract.methods.contractCheck().send({ from: accounts[0] });
 
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.methods.get().call();
-
+  //   // Get the response from the contract to prove it worked.
+  //   const response = await contract.methods
+  //     .contractCheck()
+  //     .call({ from: accounts[0] });
   //   // Update state with the result.
-  //   this.setState({ storageValue: response });
+  //   this.setState({ response: response }, () => {
+  //     console.log("web3 contract response", this.state.response);
+  //   });
   // };
 
   render() {
@@ -68,6 +79,7 @@ class App extends Component {
           <Route path="/details" component={Details} />
           <Route path="/cart" component={Cart} />
           <Route path="/manage" component={Manage} />
+          <Route path="/tracking" component={Tracking} />
           <Route component={Default} />
         </Switch>
         <Modal />

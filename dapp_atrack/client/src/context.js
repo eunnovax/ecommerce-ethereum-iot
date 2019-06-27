@@ -27,13 +27,11 @@ class ProductProvider extends Component {
       response: "",
       container: null
     };
-
+    this.contractInstantiate();
     this.handleOrder = this.handleOrder.bind(this);
+    this.orderNumber = this.orderNumber.bind(this);
   }
-
-  componentDidMount = async () => {
-    this.setProducts();
-
+  contractInstantiate = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -59,6 +57,36 @@ class ProductProvider extends Component {
       );
       console.error(error);
     }
+  };
+
+  componentDidMount = async () => {
+    this.setProducts();
+
+    // try {
+    //   // Get network provider and web3 instance.
+    //   const web3 = await getWeb3();
+
+    //   // Use web3 to get the user's accounts.
+    //   const accounts = await web3.eth.getAccounts();
+
+    //   // Get the contract instance.
+    //   const networkId = await web3.eth.net.getId();
+    //   const deployedNetwork = Logistics.networks[networkId];
+    //   const instance = new web3.eth.Contract(
+    //     Logistics.abi,
+    //     deployedNetwork && deployedNetwork.address
+    //   );
+
+    //   // Set web3, accounts, and contract to the state, and then proceed with an
+    //   // example of interacting with the contract's methods.
+    //   this.setState({ web3, accounts, contract: instance }, this.runExample);
+    // } catch (error) {
+    //   // Catch any errors for any of the above operations.
+    //   alert(
+    //     `Failed to load web3, accounts, or contract. Check console for details.`
+    //   );
+    //   console.error(error);
+    // }
   };
 
   runExample = async () => {
@@ -222,7 +250,7 @@ class ProductProvider extends Component {
     const { contract, accounts } = this.state;
     const result = await contract.methods
       .orderItem(id, title)
-      .call({ from: accounts[0] });
+      .send({ from: accounts[0] });
     this.setState({ orderID: result }, () => {
       console.log("orderItem response", this.state.orderID);
     });
@@ -237,9 +265,16 @@ class ProductProvider extends Component {
     const { contract, accounts } = this.state;
     const result = await contract.methods
       .manageContainers(this.state.container)
-      .call({ from: accounts[0] });
+      .send({ from: accounts[0] });
 
     console.log("manageContainer response", result);
+  };
+  orderNumber = async () => {
+    const { contract, accounts } = this.state;
+    console.log("contract from orderItemEvent", contract);
+    const orders = await contract.orders;
+    const orderId = await orders[accounts[0]];
+    return orderId;
   };
 
   render() {
@@ -257,7 +292,8 @@ class ProductProvider extends Component {
           clearCart: this.clearCart,
           handleOrder: this.handleOrder,
           change: this.change,
-          onSubmit: this.onSubmit
+          onSubmit: this.onSubmit,
+          orderNumber: this.orderNumber
         }}
       >
         {this.props.children}
