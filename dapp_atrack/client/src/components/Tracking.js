@@ -39,15 +39,34 @@ const styles = theme => ({
 export default withStyles(styles)(
   class Tracking extends Component {
     state = {
-      web3: null,
       contract: null,
       accounts: null
     };
-    componentDidUpdate(prevState) {
-      if (this.state.contract !== prevState.contract) {
-        console.log("contract has been instantiated!");
-      }
+    // componentDidUpdate(prevState) {
+    //   if (this.state.contract !== prevState.contract) {
+    //     console.log("contract has been instantiated!");
+    //   }
+    // }
+    componentDidMount() {
+      return (
+        <ProductConsumer>
+          {value => {
+            this.timerID = setInterval(
+              () => this.handleUpdate(value.contract),
+              1000
+            );
+          }}
+        </ProductConsumer>
+      );
     }
+    componentWillUnMount() {
+      clearInterval(this.timerID);
+    }
+    handleUpdate = contra => {
+      return this.setState({
+        contract: contra
+      });
+    };
 
     render() {
       console.log("this.props", this.props);
@@ -57,7 +76,7 @@ export default withStyles(styles)(
         <ProductConsumer>
           {value => {
             if (value.contract) {
-              var orderID = value.orderNumber();
+              value.orderNumber();
 
               return (
                 <ModalContainer>
@@ -67,7 +86,7 @@ export default withStyles(styles)(
                       id="order-number"
                       label="Order Number"
                       name="orderNumber"
-                      value={orderID}
+                      value={value.orderID}
                       onChange={e => value.change(e)}
                       margin="normal"
                       variant="outlined"
