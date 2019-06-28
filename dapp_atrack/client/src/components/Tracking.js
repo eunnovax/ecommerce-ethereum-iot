@@ -38,30 +38,64 @@ const styles = theme => ({
 
 export default withStyles(styles)(
   class Tracking extends Component {
+    state = {
+      web3: null,
+      contract: null,
+      accounts: null
+    };
+    componentDidUpdate(prevState) {
+      if (this.state.contract !== prevState.contract) {
+        console.log("contract has been instantiated!");
+      }
+    }
+
     render() {
       console.log("this.props", this.props);
       const { classes } = this.props;
+
       return (
         <ProductConsumer>
           {value => {
-            console.log("orderID", value.orderNumber());
-            return (
-              <ModalContainer>
-                <div className="row d-flex justify-content-center">
-                  <br />
-                  <TextField
-                    id="order-number"
-                    label="Order Number"
-                    name="orderNumber"
-                    onChange={e => value.change(e)}
-                    margin="normal"
-                    variant="outlined"
-                    className={classes.textField}
-                  />
-                  <br />
-                </div>
-              </ModalContainer>
-            );
+            if (value.contract) {
+              var orderID = value.orderNumber();
+
+              return (
+                <ModalContainer>
+                  <div className="row d-flex justify-content-center">
+                    <br />
+                    <TextField
+                      id="order-number"
+                      label="Order Number"
+                      name="orderNumber"
+                      value={orderID}
+                      onChange={e => value.change(e)}
+                      margin="normal"
+                      variant="outlined"
+                      className={classes.textField}
+                    />
+                    <br />
+                  </div>
+                </ModalContainer>
+              );
+            } else {
+              return (
+                <ModalContainer>
+                  <div className="row d-flex justify-content-center">
+                    <br />
+                    <TextField
+                      id="order-number"
+                      label="Order Number"
+                      name="orderNumber"
+                      onChange={e => value.change(e)}
+                      margin="normal"
+                      variant="outlined"
+                      className={classes.textField}
+                    />
+                    <br />
+                  </div>
+                </ModalContainer>
+              );
+            }
           }}
         </ProductConsumer>
       );

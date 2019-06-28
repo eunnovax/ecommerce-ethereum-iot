@@ -43,7 +43,6 @@ export default withStyles(styles)(
       return (
         <ProductConsumer>
           {value => {
-            console.log("orderNumber", value.orderNumber());
             return (
               <ModalContainer>
                 <div className="row d-flex justify-content-center">

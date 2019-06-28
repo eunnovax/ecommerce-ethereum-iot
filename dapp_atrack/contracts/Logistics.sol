@@ -83,6 +83,13 @@ contract Logistics {
     }
     ///orderitem function end 
     
+    /// orderNumber
+    function orderNum(address addr) public view returns (address) {
+        return orders[addr];
+    }
+
+    /// end of orderNumber
+
     /// cancel order 
 
     /// cancel order ends 
