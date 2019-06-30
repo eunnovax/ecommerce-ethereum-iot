@@ -42,26 +42,21 @@ export default withStyles(styles)(
       contract: null,
       accounts: null
     };
-    // componentDidUpdate(prevState) {
-    //   if (this.state.contract !== prevState.contract) {
-    //     console.log("contract has been instantiated!");
+
+    // gotOrder = async () => {
+    //   try {
+    //     let res = await axios.get('/posts');
+    //     let posts = res.data;
+    //     // this will re render the view with new data
+    //     this.setState({
+    //       Posts: posts.map((post, i) => (
+    //         <li key={i} className="list-group-item">{post.text}</li>
+    //       ))
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
     //   }
-    // }
-    componentDidMount() {
-      return (
-        <ProductConsumer>
-          {value => {
-            this.timerID = setInterval(
-              () => this.handleUpdate(value.contract),
-              1000
-            );
-          }}
-        </ProductConsumer>
-      );
-    }
-    componentWillUnMount() {
-      clearInterval(this.timerID);
-    }
+    // };
     handleUpdate = contra => {
       return this.setState({
         contract: contra
@@ -76,26 +71,46 @@ export default withStyles(styles)(
         <ProductConsumer>
           {value => {
             if (value.contract) {
-              value.orderNumber();
-
-              return (
-                <ModalContainer>
-                  <div className="row d-flex justify-content-center">
-                    <br />
-                    <TextField
-                      id="order-number"
-                      label="Order Number"
-                      name="orderNumber"
-                      value={value.orderID}
-                      onChange={e => value.change(e)}
-                      margin="normal"
-                      variant="outlined"
-                      className={classes.textField}
-                    />
-                    <br />
-                  </div>
-                </ModalContainer>
-              );
+              const orderID = value.orderNumber();
+              console.log("typeOf promise result", typeof orderID);
+              if (typeof orderID === typeof "") {
+                return (
+                  <ModalContainer>
+                    <div className="row d-flex justify-content-center">
+                      <br />
+                      <TextField
+                        id="order-number"
+                        label="Order Number"
+                        name="orderNumber"
+                        value={10}
+                        onChange={e => value.change(e)}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textField}
+                      />
+                      <br />
+                    </div>
+                  </ModalContainer>
+                );
+              } else {
+                return (
+                  <ModalContainer>
+                    <div className="row d-flex justify-content-center">
+                      <br />
+                      <TextField
+                        id="order-number"
+                        label="Order Number"
+                        name="orderNumber"
+                        onChange={e => value.change(e)}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textField}
+                      />
+                      <br />
+                    </div>
+                  </ModalContainer>
+                );
+              }
             } else {
               return (
                 <ModalContainer>

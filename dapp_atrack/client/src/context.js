@@ -245,8 +245,9 @@ class ProductProvider extends Component {
     const { contract, accounts } = this.state;
     console.log("contract from orderItemEvent", contract);
     const orderId = await contract.methods.orderNum(accounts[0]).call();
-    console.log("orders", orderId);
-    this.setState({ orderID: orderId });
+    console.log("orders typeof", typeof orderId);
+    //this.setState({ orderID: orderId });
+    return orderId;
   };
 
   render() {
