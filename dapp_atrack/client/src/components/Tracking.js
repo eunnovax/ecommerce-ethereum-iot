@@ -70,47 +70,26 @@ export default withStyles(styles)(
       return (
         <ProductConsumer>
           {value => {
-            if (value.contract) {
-              const orderID = value.orderNumber();
-              console.log("typeOf promise result", typeof orderID);
-              if (typeof orderID === typeof "") {
-                return (
-                  <ModalContainer>
-                    <div className="row d-flex justify-content-center">
-                      <br />
-                      <TextField
-                        id="order-number"
-                        label="Order Number"
-                        name="orderNumber"
-                        value={10}
-                        onChange={e => value.change(e)}
-                        margin="normal"
-                        variant="outlined"
-                        className={classes.textField}
-                      />
-                      <br />
-                    </div>
-                  </ModalContainer>
-                );
-              } else {
-                return (
-                  <ModalContainer>
-                    <div className="row d-flex justify-content-center">
-                      <br />
-                      <TextField
-                        id="order-number"
-                        label="Order Number"
-                        name="orderNumber"
-                        onChange={e => value.change(e)}
-                        margin="normal"
-                        variant="outlined"
-                        className={classes.textField}
-                      />
-                      <br />
-                    </div>
-                  </ModalContainer>
-                );
-              }
+            if (value.orderID) {
+              console.log("typeOf promise result", value.orderID);
+              return (
+                <ModalContainer>
+                  <div className="row d-flex justify-content-center">
+                    <br />
+                    <TextField
+                      id="order-number"
+                      label="Order Number"
+                      name="orderNumber"
+                      value={value.orderID}
+                      onChange={e => value.change(e)}
+                      margin="normal"
+                      variant="outlined"
+                      className={classes.textField}
+                    />
+                    <br />
+                  </div>
+                </ModalContainer>
+              );
             } else {
               return (
                 <ModalContainer>
