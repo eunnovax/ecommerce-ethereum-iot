@@ -90,10 +90,15 @@ contract Logistics {
     /// end of orderNumber
 
     /// containerStatus
-    function containerStatus(address packageId) public view returns (address) {
+    function containerStatus(address packageId) public view returns (string memory) {
         return packages[packageId].transitStatus;
     }
     /// end of containerStatus 
+    /// container activation
+    function containerActivation(address containerAddress) public view returns (bool) {
+        return containers[containerAddress];
+    }
+    /// end of container activity
     /// cancel order 
 
     /// cancel order ends 
