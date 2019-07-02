@@ -25,7 +25,8 @@ class ProductProvider extends Component {
       contract: null,
       orderID: null,
       response: "",
-      container: null
+      container: null,
+      orderStatus: ""
     };
     this.handleOrder = this.handleOrder.bind(this);
     this.orderNumber = this.orderNumber.bind(this);
@@ -54,6 +55,8 @@ class ProductProvider extends Component {
       this.setState({ web3, accounts, contract: instance }, this.runExample);
       const orderId = await instance.methods.orderNum(accounts[0]).call();
       this.setState({ orderID: orderId });
+      const orderSt = await instance.methods.containerStatus(orderId).call();
+      this.setState({ orderStatus: orderSt });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
