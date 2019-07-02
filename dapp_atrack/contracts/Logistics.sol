@@ -87,9 +87,13 @@ contract Logistics {
     function orderNum(address addr) public view returns (address) {
         return orders[addr];
     }
-
     /// end of orderNumber
 
+    /// containerStatus
+    function containerStatus(address packageId) public view returns (address) {
+        return packages[packageId].transitStatus;
+    }
+    /// end of containerStatus 
     /// cancel order 
 
     /// cancel order ends 
