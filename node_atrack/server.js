@@ -362,11 +362,11 @@ const logistics = new web3.eth.Contract(contractABI, contractAddress);
             nonce: web3.utils.toHex(txCount),
             to: contractAddress,
             //value: web3.utils.toHex(web3.utils.toWei('1','ether')),
-            gasLimit: web3.utils.toHex(900000),
-            gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
+            gasLimit: web3.utils.toHex(1000000),
+            gasPrice: web3.utils.toHex(web3.utils.toWei('11', 'gwei')),
             //data: logistics.methods.manageContainers(acc1).encodeABI()
             //data: logistics.methods.orderItem(1, 'xbox').encodeABI()
-            data: logistics.methods.containerReport('0xc4C52cd24B90510871F74bb7Ad17D6F750b1679B', "london_temp20deg").encodeABI()
+            data: logistics.methods.containerReport('0xc4C52cd24B90510871F74bb7Ad17D6F750b1679B', "londontemp20deg").encodeABI()
             //data: data
         }
         // Sign the Tx

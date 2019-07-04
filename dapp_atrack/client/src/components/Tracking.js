@@ -43,22 +43,11 @@ export default withStyles(styles)(
       accounts: null
     };
 
-    // <TextField
-    //                   id="order-status"
-    //                   label="Order Status"
-    //                   name="orderStatus"
-    //                   value={value.orderStatus}
-    //                   onChange={e => value.change(e)}
-    //                   margin="normal"
-    //                   variant="outlined"
-    //                   className={classes.textField}
-    //                 />
-    // handleUpdate = contra => {
-    //   return this.setState({
-    //     contract: contra
-    //   });
-    // };
-
+    handleUpdate = contra => {
+      return this.setState({
+        contract: contra
+      });
+    };
     render() {
       console.log("this.props", this.props);
       const { classes } = this.props;
@@ -66,7 +55,7 @@ export default withStyles(styles)(
       return (
         <ProductConsumer>
           {value => {
-            if (value.orderID) {
+            if (value.orderStatus) {
               console.log("typeOf promise result", value.orderID);
               return (
                 <ModalContainer>
@@ -83,6 +72,16 @@ export default withStyles(styles)(
                       className={classes.textField}
                     />
                     <br />
+                    <TextField
+                      id="order-status"
+                      label="Order Status"
+                      name="orderStatus"
+                      value={value.orderStatus}
+                      onChange={e => value.change(e)}
+                      margin="normal"
+                      variant="outlined"
+                      className={classes.textField}
+                    />
                   </div>
                 </ModalContainer>
               );
