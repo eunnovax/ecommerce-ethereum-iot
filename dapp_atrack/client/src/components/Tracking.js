@@ -43,25 +43,21 @@ export default withStyles(styles)(
       accounts: null
     };
 
-    // gotOrder = async () => {
-    //   try {
-    //     let res = await axios.get('/posts');
-    //     let posts = res.data;
-    //     // this will re render the view with new data
-    //     this.setState({
-    //       Posts: posts.map((post, i) => (
-    //         <li key={i} className="list-group-item">{post.text}</li>
-    //       ))
-    //     });
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
+    // <TextField
+    //                   id="order-status"
+    //                   label="Order Status"
+    //                   name="orderStatus"
+    //                   value={value.orderStatus}
+    //                   onChange={e => value.change(e)}
+    //                   margin="normal"
+    //                   variant="outlined"
+    //                   className={classes.textField}
+    //                 />
+    // handleUpdate = contra => {
+    //   return this.setState({
+    //     contract: contra
+    //   });
     // };
-    handleUpdate = contra => {
-      return this.setState({
-        contract: contra
-      });
-    };
 
     render() {
       console.log("this.props", this.props);
@@ -70,7 +66,7 @@ export default withStyles(styles)(
       return (
         <ProductConsumer>
           {value => {
-            if (value.orderStatus) {
+            if (value.orderID) {
               console.log("typeOf promise result", value.orderID);
               return (
                 <ModalContainer>
@@ -87,16 +83,6 @@ export default withStyles(styles)(
                       className={classes.textField}
                     />
                     <br />
-                    <TextField
-                      id="order-status"
-                      label="Order Status"
-                      name="orderStatus"
-                      value={value.orderStatus}
-                      onChange={e => value.change(e)}
-                      margin="normal"
-                      variant="outlined"
-                      className={classes.textField}
-                    />
                   </div>
                 </ModalContainer>
               );
