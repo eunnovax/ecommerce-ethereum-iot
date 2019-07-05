@@ -45,7 +45,7 @@ export default withStyles(styles)(
           {value => {
             return (
               <ModalContainer>
-                <div className="row d-flex justify-content-center">
+                <div className="col d-flex justify-content-center">
                   <form className="verspace">
                     <br />
                     <TextField
@@ -73,10 +73,10 @@ export default withStyles(styles)(
                   </form>
                   <br />
                   <TextField
-                    id="order-number"
-                    label="Order Number"
-                    name="orderNumber"
-                    value={value.container}
+                    id="container-active"
+                    label="Container Active"
+                    name="containerActive"
+                    value={value.contActStatus}
                     onChange={e => value.change(e)}
                     margin="normal"
                     variant="outlined"

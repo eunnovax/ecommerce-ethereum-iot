@@ -26,7 +26,8 @@ class ProductProvider extends Component {
       orderID: null,
       response: "",
       container: null,
-      orderStatus: ""
+      orderStatus: "",
+      contActStatus: false
     };
     this.handleOrder = this.handleOrder.bind(this);
     this.orderNumber = this.orderNumber.bind(this);
