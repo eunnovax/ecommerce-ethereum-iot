@@ -71,6 +71,17 @@ export default withStyles(styles)(
                       Set Container
                     </Button>
                   </form>
+                  <br />
+                  <TextField
+                    id="order-number"
+                    label="Order Number"
+                    name="orderNumber"
+                    value={value.container}
+                    onChange={e => value.change(e)}
+                    margin="normal"
+                    variant="outlined"
+                    className={classes.textField}
+                  />
                 </div>
               </ModalContainer>
             );
