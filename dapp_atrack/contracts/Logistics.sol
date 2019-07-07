@@ -32,10 +32,13 @@ contract Logistics {
         uint container_time;
     }
     
+    uint public orderCount;
     address Owner;
     mapping (address => package) public packages;
     mapping (address => address) public orders;
     mapping (address => bool) public containers;
+    mapping (uint => address) public orderCheck;
+    mapping (address => address) public containerCheck;
     ///DECLARATION END
     
     ///modifier
@@ -56,12 +59,13 @@ contract Logistics {
         return response;
     }
     
-    function manageContainers(address _containerAddress) onlyOwner public returns (bool) {
+    function manageContainers(address _containerAddress, address _orderId) onlyOwner public returns (bool) {
         if(!containers[_containerAddress]) {
             containers[_containerAddress] = true;
         } else {
             containers[_containerAddress] = false;
         }
+        containerCheck[_orderId] = _containerAddress;
         emit containerReg(containers[_containerAddress]);
         return containers[_containerAddress];
     }
@@ -69,7 +73,7 @@ contract Logistics {
     ////orderitem function//////
     function orderItem(uint _itemId, string memory _itemName) public returns (address) {
         address uniqueId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
-        
+        orderCount++;
         packages[uniqueId].isuidgenerated = true;
         packages[uniqueId].itemId = _itemId;
         packages[uniqueId].itemName = _itemName;
@@ -78,6 +82,7 @@ contract Logistics {
         packages[uniqueId].customer = msg.sender;
         packages[uniqueId].orderTime = now;
         orders[msg.sender] = uniqueId;
+        orderCheck[orderCount] = uniqueId;
         emit orderId(uniqueId);    
         return uniqueId;
     }
@@ -99,8 +104,17 @@ contract Logistics {
         return containers[containerAddress];
     }
     /// end of container activity
+    /// orderCheck 
+    function orderList(uint _orderCount) onlyOwner public view returns (address) {
+        return orderCheck[_orderCount];
+    }
+    /// end of orderCheck
+    /// containerCheck
+    function containerList(address _orderId) onlyOwner public view returns (address) {
+        return containerCheck[_orderId];
+    }
+    /// end of containerCheck
     /// cancel order 
-
     /// cancel order ends 
     
     /// iot container report
