@@ -114,6 +114,9 @@ contract Logistics {
         return containerCheck[_orderId];
     }
     /// end of containerCheck
+    function orderVolume() onlyOwner public view returns (uint) {
+        return orderCount;
+    }
     /// cancel order 
     /// cancel order ends 
     
