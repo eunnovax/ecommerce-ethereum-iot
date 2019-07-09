@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { ProductConsumer } from "../context";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core";
-import Logistics from "../contracts/Logistics.json";
-import getWeb3 from "../utils/getWeb3";
 
 const styles = theme => ({
   container: {

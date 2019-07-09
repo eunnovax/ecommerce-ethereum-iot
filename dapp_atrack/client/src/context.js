@@ -27,7 +27,8 @@ class ProductProvider extends Component {
       response: "",
       container: null,
       orderStatus: "",
-      contActStatus: false
+      contActStatus: false,
+      orderArray: []
     };
     this.handleOrder = this.handleOrder.bind(this);
     this.orderNumber = this.orderNumber.bind(this);
@@ -58,6 +59,7 @@ class ProductProvider extends Component {
       this.setState({ orderID: orderId });
       const orderSt = await instance.methods.containerStatus(orderId).call();
       this.setState({ orderStatus: orderSt });
+      this.orderHandle(instance);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -82,7 +84,24 @@ class ProductProvider extends Component {
       console.log("web3 contract response", this.state.response);
     });
   };
-
+  orderHandle = async instance => {
+    const orderCount = await instance.methods.orderVolume().call();
+    let tempOrders = [];
+    for (i = 0; i < orderCount; i++) {
+      const orderId = await instance.methods.orderList(i).call();
+      const containerCheck = await instance.methods
+        .containerList(orderId)
+        .call();
+      const orderObject = {
+        orderN: orderId,
+        contAddr: containerCheck
+      };
+      tempOrders = [...tempOrders, orderObject];
+    }
+    this.setState({
+      orderArray: tempOrders
+    });
+  };
   // sets the product array to the initial state
   setProducts = () => {
     let tempProducts = [];
