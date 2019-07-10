@@ -55,11 +55,16 @@ class ProductProvider extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, accounts, contract: instance }, this.runExample);
+      // console.log("account", accounts);
       const orderId = await instance.methods.orderNum(accounts[0]).call();
       this.setState({ orderID: orderId });
       const orderSt = await instance.methods.containerStatus(orderId).call();
       this.setState({ orderStatus: orderSt });
-      this.orderHandle(instance);
+      // const orderCount = await instance.methods
+      //   .orderVolume()
+      //   .call({ from: accounts[0] });
+      // console.log("order Count", orderCount);
+      this.orderHandle();
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -84,23 +89,36 @@ class ProductProvider extends Component {
       console.log("web3 contract response", this.state.response);
     });
   };
-  orderHandle = async instance => {
-    const orderCount = await instance.methods.orderVolume().call();
+  orderHandle = async () => {
+    const { accounts, contract } = this.state;
+    const orderCount = await contract.methods
+      .orderVolume()
+      .call({ from: accounts[0] });
+    console.log("order Count", orderCount);
     let tempOrders = [];
-    for (i = 0; i < orderCount; i++) {
-      const orderId = await instance.methods.orderList(i).call();
-      const containerCheck = await instance.methods
+
+    for (let i = 1; i <= orderCount; i++) {
+      const orderId = await contract.methods
+        .orderList(i)
+        .call({ from: accounts[0] });
+      const containerCheck = await contract.methods
         .containerList(orderId)
-        .call();
+        .call({ from: accounts[0] });
       const orderObject = {
+        id: i,
         orderN: orderId,
         contAddr: containerCheck
       };
       tempOrders = [...tempOrders, orderObject];
     }
-    this.setState({
-      orderArray: tempOrders
-    });
+    this.setState(
+      {
+        orderArray: tempOrders
+      },
+      () => {
+        console.log("orderArray", this.state.orderArray);
+      }
+    );
   };
   // sets the product array to the initial state
   setProducts = () => {
@@ -252,16 +270,17 @@ class ProductProvider extends Component {
       console.log("orderItem response", this.state.orderID);
     });
   };
-  change = e => {
+  change = (e, orderId) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      orderID: orderId
     });
   };
   onSubmit = async e => {
     e.preventDefault();
     const { contract, accounts } = this.state;
     const result = await contract.methods
-      .manageContainers(this.state.container)
+      .manageContainers(this.state.container, this.state.orderID)
       .send({ from: accounts[0] });
 
     console.log("manageContainer response", result);

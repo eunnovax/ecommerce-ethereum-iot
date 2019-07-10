@@ -11,7 +11,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
-import CartTotals from "./Cart/CartTotals";
 
 const styles = theme => ({
   container: {
@@ -47,48 +46,66 @@ export default withStyles(styles)(
     render() {
       // console.log("this.props", this.props);
       const { classes } = this.props;
+      const { order } = this.props;
       return (
         <ProductConsumer>
           {value => {
-            // const { formalOpen, closeFormal } = value;
-            // if (!formalOpen) {
-            //   return null;
-            // } else {
-
-            return (
-              <ModalContainer>
+            if (
+              order.contAddr !== "0x0000000000000000000000000000000000000000"
+            ) {
+              return (
                 <div className="container verspaceMobile">
-                  <div className="row d-flex justify-content-center">
-                    <br />
-                    <Paper className={classes.root}>
-                      <Table className={classes.table}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Order IDs </TableCell>
-                            <TableCell align="right">
-                              Active Container Address
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {value.orderArray.map(row => (
-                            <TableRow key={row.id}>
-                              <TableCell component="th" scope="row">
-                                {row.orderN}
-                              </TableCell>
-                              <TableCell align="right">
-                                {row.contAddr}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </Paper>
-                  </div>
+                  <TableRow key={order.id}>
+                    <TableCell component="th" scope="row">
+                      {order.orderN}
+                    </TableCell>
+                    <TableCell align="right">{order.contAddr}</TableCell>
+                  </TableRow>
                 </div>
-              </ModalContainer>
-            );
-            //}
+              );
+            } else if (
+              order.contAddr === "0x0000000000000000000000000000000000000000" &&
+              order.orderN
+            ) {
+              return (
+                <div className="container verspaceMobile">
+                  <TableRow key={order.id}>
+                    <TableCell component="th" scope="row">
+                      {order.orderN}
+                    </TableCell>
+                    <TableCell align="right">
+                      <form className="verspace">
+                        <br />
+                        <TextField
+                          id="container-address"
+                          label="Container Address"
+                          name="container"
+                          onChange={e => value.change(e, order.orderN)}
+                          margin="normal"
+                          variant="outlined"
+                          className={classes.textField}
+                        />
+                        <br />
+
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={e => {
+                            value.onSubmit(e);
+                            //closeFormal();
+                          }}
+                          className={classes.button}
+                        >
+                          Set Container
+                        </Button>
+                      </form>
+                    </TableCell>
+                  </TableRow>
+                </div>
+              );
+            } else {
+              return console.log("no order");
+            }
           }}
         </ProductConsumer>
       );
