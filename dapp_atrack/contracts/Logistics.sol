@@ -39,6 +39,7 @@ contract Logistics {
     mapping (address => bool) public containers;
     mapping (uint => address) public orderCheck;
     mapping (address => address) public containerCheck;
+    mapping (address => address) public orderIdContainer;
     ///DECLARATION END
     
     ///modifier
@@ -66,6 +67,7 @@ contract Logistics {
             containers[_containerAddress] = false;
         }
         containerCheck[_orderId] = _containerAddress;
+        orderIdContainer[_containerAddress] = _orderId;
         emit containerReg(containers[_containerAddress]);
         return containers[_containerAddress];
     }
@@ -87,7 +89,9 @@ contract Logistics {
         return uniqueId;
     }
     ///orderitem function end 
-    
+    function orderIdToContainer(address _containerAddress) public view returns (address) {
+        return orderIdContainer[_containerAddress];
+    }
     /// orderNumber
     function orderNum(address addr) public view returns (address) {
         return orders[addr];
