@@ -295,6 +295,7 @@ const logistics = new web3.eth.Contract(contractABI, contractAddress);
 
 //console.log(logistics.address)
 //logistics.methods.manageContainers.call((err, res) => {console.log(res)})
+
 ///////////////////////// EVENTS /////////////////////////////////////////////
 // logistics.getPastEvents(
 //   'orderId',

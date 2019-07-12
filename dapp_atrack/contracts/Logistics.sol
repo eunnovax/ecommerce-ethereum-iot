@@ -33,6 +33,7 @@ contract Logistics {
     }
     
     uint public orderCount;
+    uint orderValue;
     address Owner;
     mapping (address => package) public packages;
     mapping (address => address) public orders;
@@ -40,6 +41,8 @@ contract Logistics {
     mapping (uint => address) public orderCheck;
     mapping (address => address) public containerCheck;
     mapping (address => address) public orderIdContainer;
+    mapping (address => uint) balances;
+
     ///DECLARATION END
     
     ///modifier
@@ -53,7 +56,10 @@ contract Logistics {
     }
     
     ///MODIFIER END
-    
+    function withdraw(address payable _to) internal {
+        balances[address(this)] -= orderValue;
+        _to.transfer(orderValue);
+    }
     // contract check method after instantiation
     function contractCheck() pure public returns (string memory) {
         string memory response = "contract works";
@@ -73,7 +79,10 @@ contract Logistics {
     }
     
     ////orderitem function//////
-    function orderItem(uint _itemId, string memory _itemName) public returns (address) {
+    function orderItem(uint _itemId, string memory _itemName, uint _price) public payable returns (address) {
+        orderValue = _price;
+        require(msg.value >= orderValue);
+        balances[address(this)] = address(this).balance;
         address uniqueId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
         orderCount++;
         packages[uniqueId].isuidgenerated = true;
@@ -138,6 +147,10 @@ contract Logistics {
         return packages[_uniqueId].transitStatus;
     }
     /// iot container report end
-    
+    function completeTx(address _orderId) onlyOwner public returns(bool) {
+        if(packages[_orderId].orderStatus == 3) {
+            withdraw(msg.sender);
+        }
+    }
     
 }
