@@ -16,7 +16,7 @@ const privateKey1 = Buffer.from('039d93d1fdef86309699e31d1c2d9475ad0c2978a15af7d
 //const privateKey1 = Buffer.from(process.env.PRIVATE_KEY_1, 'hex')
 const privateKey2 = Buffer.from('7c1dce5c21b6bf0b590e50bd9b6c08fb1698d13dd9646535b4d2858b390c1a2b', 'hex')
 //console.log('privatekey1', process.env.PRIVATE_KEY_1)
-const contractAddress = '0x0D1d15f92beD88544Ec8F421FDF2ABB667D04B2e'
+const contractAddress = '0x432C68e8494508041F9Ca24000cA659685eb1469'
 const contractABI = [
     {
         "constant": false,
@@ -39,6 +39,20 @@ const contractABI = [
         ],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "orderCount",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -98,6 +112,58 @@ const contractABI = [
     },
     {
         "constant": true,
+        "inputs": [
+            {
+                "name": "_orderId",
+                "type": "address"
+            }
+        ],
+        "name": "containerList",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_containerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "orderIdToContainer",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "orderVolume",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
         "inputs": [],
         "name": "contractCheck",
         "outputs": [
@@ -108,25 +174,6 @@ const contractABI = [
         ],
         "payable": false,
         "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_containerAddress",
-                "type": "address"
-            }
-        ],
-        "name": "manageContainers",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -149,6 +196,63 @@ const contractABI = [
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_orderCount",
+                "type": "uint256"
+            }
+        ],
+        "name": "orderList",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "orderCheck",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "orderIdContainer",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [
             {
@@ -158,6 +262,10 @@ const contractABI = [
             {
                 "name": "_itemName",
                 "type": "string"
+            },
+            {
+                "name": "_price",
+                "type": "uint256"
             }
         ],
         "name": "orderItem",
@@ -167,8 +275,8 @@ const contractABI = [
                 "type": "address"
             }
         ],
-        "payable": false,
-        "stateMutability": "nonpayable",
+        "payable": true,
+        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -188,6 +296,67 @@ const contractABI = [
         ],
         "payable": false,
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "containerCheck",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_orderId",
+                "type": "address"
+            }
+        ],
+        "name": "completeTx",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_containerAddress",
+                "type": "address"
+            },
+            {
+                "name": "_orderId",
+                "type": "address"
+            }
+        ],
+        "name": "manageContainers",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
